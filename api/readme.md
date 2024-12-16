@@ -64,9 +64,7 @@ brew services stop mongodb-community
 Once you have set up your environment and dependencies, you can run the FastAPI backend using Uvicorn. Run the following command:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 
 This will start the FastAPI server at http://127.0.0.1:8000, with hot reloading enabled during development.
-
-### API Reference

@@ -2,7 +2,7 @@ import os
 import time
 import logging
 from pathlib import Path
-from app.services.csv_service import normalize_and_save_csv 
+from services.csv_service import normalize_and_save_csv 
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")

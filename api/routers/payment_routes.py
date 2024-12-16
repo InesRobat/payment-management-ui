@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, File, UploadFile, Depends, Query
-from app.services.payment_service import get_payments, create_payment, update_payment, delete_payment, upload_evidence, download_evidence, get_payment_stats, get_payment_status_distribution, get_payment_by_currency, get_payment_by_country
-from app.database import db
+from services.payment_service import get_payments, create_payment, update_payment, delete_payment, upload_evidence, download_evidence, get_payment_stats, get_payment_status_distribution, get_payment_by_currency, get_payment_by_country
+from database import db
 from typing import Dict, Optional, List
 import json
 

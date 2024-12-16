@@ -1,8 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from pymongo import MongoClient
 from bson import ObjectId
-from app.database import db, get_db
-from app.services.payment_service import upload_evidence, download_evidence
+from database import db, get_db
+from services.payment_service import upload_evidence, download_evidence
 from pymongo.database import Database 
 
 router = APIRouter()

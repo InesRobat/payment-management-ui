@@ -1,11 +1,20 @@
-from fastapi import FastAPI, HTTPException
-from app.database import get_db
-from app.routers import csv_routes, payment_routes, evidence_routes
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
+from fastapi.staticfiles import StaticFiles
+import os
+from database import get_db
 from pymongo.errors import ServerSelectionTimeoutError
+from routers import csv_routes, payment_routes, evidence_routes
 import threading
-from file_watcher import start_file_watcher  # Import the file watcher script
+from file_watcher import start_file_watcher
 import logging
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -22,7 +31,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins temporarily for testing
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,6 +73,22 @@ async def check_file_watcher():
     return {"status": "success", "message": "File watcher is running in the background."}
 
 # Root endpoint for health check
-@app.get("/")
+@app.get("/api")
 async def read_root():
     return {"message": "Payment API is up and running!"}
+
+templates = Jinja2Templates(directory="./dist/browser")
+
+# Mounts the `static` folder within the `build` folder to the `/static` route.
+if not Path("./dist/browser/assets").exists():
+    logger.error("Directory './dist/browser/assets' does not exist")
+else:
+    app.mount("/assets", StaticFiles(directory="./dist/browser/assets"), "assets")
+
+
+# Defines a route handler for `/*` essentially.
+# NOTE: this needs to be the last route defined b/c it's a catch all route
+
+@app.get("/{rest_of_path:path}")
+async def ui(req: Request, rest_of_path: str):
+    return templates.TemplateResponse("index.html", {"request": req})

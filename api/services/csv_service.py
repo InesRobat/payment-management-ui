@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
-from app.models.payment_model import Payment  # assuming you have a model for the Payment document
-from app.database import db  # Assuming MongoDB connection setup is in database.py
+from models.payment_model import Payment  # assuming you have a model for the Payment document
+from database import db  # Assuming MongoDB connection setup is in database.py
 import pytz
 
 def normalize_and_save_csv(file_path: str):
