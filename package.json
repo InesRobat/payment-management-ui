@@ -4,9 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run change && pip3 install -r api/requirements.txt",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "change": "node ./update-path.js",
+    "fastapi-dev": "python3 -m uvicorn api.main:app --reload",
+    "app": "python3 -m uvicorn api.main:app"
   },
   "private": true,
   "dependencies": {

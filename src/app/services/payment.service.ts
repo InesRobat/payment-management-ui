@@ -10,7 +10,7 @@ import { Payment } from '../models/payment';
 })
 export class PaymentService {
 
-  private apiUrl = '/api';
+  private apiUrl = 'https://payment-management-ui.vercel.app/api';
 
   constructor(private http: HttpClient) { }
 
