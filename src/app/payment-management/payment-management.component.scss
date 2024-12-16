@@ -1,0 +1,32 @@
+@import './../../../styles/utils.scss';
+
+:host {
+  display: block;
+  margin-top: get-vh(125px);
+}
+
+.payment-management {
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .payment-section {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .filter-section {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .new-payment-button {
+    display: flex;
+    align-items: center;
+  }
+
+}

@@ -1,0 +1,6 @@
+@import './../../../../../styles/utils.scss';
+
+:host {
+  display: block;
+  margin-top: get-vh(78px);
+}

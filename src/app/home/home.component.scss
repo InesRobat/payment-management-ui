@@ -1,0 +1,103 @@
+@import './../../../styles/utils.scss';
+
+:host {
+  @include flex (flex-start, center, column);
+  width: 100%;
+  height: get-vh(972px);
+  margin-top: get-vh(78px);
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: get-vh(15px);
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__text {
+    @include flex (center, center, column);
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    color: white;
+
+    h1 {
+      text-transform: uppercase;
+    }
+  }
+}
+
+.enter {
+  position: absolute;
+  padding: 1.75rem 4rem;
+  z-index: 100;
+  font-family: "new-science", -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+  font-size: 1.15rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  position: relative;
+  border-radius: .25rem;
+  // padding: .75rem 1.5rem;
+  width: max-content;
+  color: transparent;
+  background: linear-gradient(90deg, color-mix(in srgb, oklch(63.32% .24 31.68), white 60%) 0%, color-mix(in srgb, oklch(69.02% .277 332.77), white 70%) 50%, color-mix(in srgb, oklch(53.18% .28 296.97), white 70%) 100%);
+}
+
+.enter::before {
+  content: attr(text);
+  position: absolute;
+  inset: 1px;
+  background: radial-gradient(circle, black 0%, black 100%);
+  border-radius: .2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s ease, background .3s ease;
+  color: oklch(98.81% 0 0);
+}
+
+.enter::after {
+  content: attr(text);
+  position: absolute;
+  inset: 1px;
+  background: oklch(16.93% .004 285.95);
+  border-radius: .2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s ease, background .3s ease;
+  color: oklch(98.81% 0 0);
+}
+
+.enter:hover {
+  animation: spin-gradient 4s linear infinite forwards
+}
+
+.enter:hover:before {
+  background: radial-gradient(circle at center bottom, color-mix(in srgb, color-mix(in srgb, oklch(69.02% .277 332.77), white 70%) 5%, oklab(0.17 0 0) 75%) 0%, color-mix(in srgb, black, transparent 15%) 80%);
+  opacity: .9;
+}
+
+.enter:hover:after {
+  opacity: 0;
+}
+
+@keyframes spin-gradient {
+  0% {
+    background: linear-gradient(90deg, color-mix(in srgb, oklch(63.32% .24 31.68), white 60%) 0%, color-mix(in srgb, oklch(69.02% .277 332.77), white 70%) 50%, color-mix(in srgb, oklch(53.18% .28 296.97), white 70%) 100%);
+  }
+
+  100% {
+    background: linear-gradient(450deg, color-mix(in srgb, oklch(63.32% .24 31.68), white 60%) 0%, color-mix(in srgb, oklch(69.02% .277 332.77), white 70%) 50%, color-mix(in srgb, oklch(53.18% .28 296.97), white 70%) 100%);
+  }
+}

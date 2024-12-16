@@ -1,0 +1,35 @@
+@import './../../../../styles/utils.scss';
+
+:host {
+  @include flex(space-around, center, row);
+  width: 100%;
+  margin-top: get-vh(78px);
+  padding: 16px 16px 0;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.image {
+  width: get-vh(944px);
+  height: get-vh(972px);
+
+  img {
+    @include img(100%, 100%, center, contain);
+  }
+}
+
+mat-card {
+  width: 40%;
+}
+
+form {
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+}

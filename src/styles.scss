@@ -1,0 +1,49 @@
+@import './../styles/utils.scss';
+
+html,
+body {
+    height: 100%;
+    font-size: calc(.5 * (1.5vh + 1.1vw));
+    font-family: 'Satoshi-Regular';
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// .mat-mdc-raised-button.mat-primary {
+//     --mdc-protected-button-container-color: #ffae37;
+// }
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+mat-dialog-content {
+    font-size: 16px;
+    color: #555;
+}
+
+mat-dialog-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+mat-dialog-actions {
+    margin-top: 10px;
+}
+
+.mat-mdc-card {
+    border-radius: none !important;
+    background-color: none !important;
+    border-width: inherit !important;
+    border-style: inherit !important;
+    border-color: none !important;
+    box-shadow: none !important;
+}

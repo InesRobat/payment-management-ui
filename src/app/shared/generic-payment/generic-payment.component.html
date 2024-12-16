@@ -1,0 +1,138 @@
+<div class="image">
+    <img [src]="imageUrl" alt="">
+</div>
+
+<mat-card>
+    <mat-card-title>{{ mode === 'edit' ? 'Edit Payment' : mode === 'view' ? 'Payment Details' : 'Add Payment'
+        }}</mat-card-title>
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" [ngClass]="{ 'readonly': mode === 'view' }">
+        <div class="form-group">
+            <!-- First Name -->
+            <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="payee_first_name" [readonly]="mode === 'view' || mode === 'edit'" />
+                <mat-error *ngIf="paymentForm.get('payee_first_name')?.hasError('required')">
+                    First Name is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Last Name -->
+            <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="payee_last_name" [readonly]="mode === 'view' || mode === 'edit'" />
+                <mat-error *ngIf="paymentForm.get('payee_last_name')?.hasError('required')">
+                    Last Name is required
+                </mat-error>
+            </mat-form-field>
+
+
+            <!-- Country -->
+            <mat-form-field appearance="outline">
+                <mat-label>Country</mat-label>
+                <input matInput [matAutocomplete]="countryAuto" formControlName="country"
+                    (input)="onCountryInput($event)" [readonly]="mode === 'view' || mode === 'edit'" />
+
+                <mat-autocomplete #countryAuto="matAutocomplete" [displayWith]="displayCountry"
+                    (optionSelected)="onCountrySelected($event)">
+                    <mat-option *ngFor="let c of filteredCountries" [value]="c">
+                        {{ c.country }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+
+            <!-- State -->
+            <mat-form-field appearance="outline">
+                <mat-label>State</mat-label>
+                <input matInput [matAutocomplete]="stateAuto" formControlName="state" (input)="onStateInput($event)"
+                    [readonly]="mode === 'view' || mode === 'edit'" />
+                <mat-autocomplete #stateAuto="matAutocomplete" [displayWith]="displayState"
+                    (optionSelected)="onStateSelected($event)">
+                    <mat-option *ngFor="let state of filteredStates" [value]="state.name">
+                        {{ state.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- City -->
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput [matAutocomplete]="cityAuto" formControlName="city" (input)="onCityInput($event)"
+                    [readonly]="mode === 'view' || mode === 'edit'" />
+                <mat-autocomplete #cityAuto="matAutocomplete" [displayWith]="displayCity">
+                    <mat-option *ngFor="let city of filteredCities" [value]="city">
+                        {{ city }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- Currency -->
+            <mat-form-field appearance="outline">
+                <mat-label>Currency</mat-label>
+                <input matInput formControlName="currency" readonly />
+            </mat-form-field>
+
+            <!-- Due Date -->
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="payee_due_date"
+                    [readonly]="mode === 'view'" />
+                <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="mode === 'view'"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="paymentForm.get('payee_due_date')?.hasError('required')">
+                    Due Date is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Due Amount -->
+            <mat-form-field appearance="outline">
+                <mat-label>Due Amount</mat-label>
+                <input matInput formControlName="due_amount" type="number" [readonly]="mode === 'view'" />
+                <mat-error *ngIf="paymentForm.get('due_amount')?.hasError('required')">
+                    Due Amount is required
+                </mat-error>
+                <mat-error *ngIf="paymentForm.get('due_amount')?.hasError('pattern')">
+                    Please enter a valid number
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Status -->
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+
+                <mat-select formControlName="payee_payment_status"
+                    [disabled]="mode === 'add' || (mode === 'view' && paymentData?.evidence_file_id)"
+                    (selectionChange)="onStatusChange()">
+                    <mat-option value="pending">Pending</mat-option>
+                    <mat-option value="due_now">Due Now</mat-option>
+                    <mat-option value="completed">Completed</mat-option>
+                    <mat-option value="overdue"
+                        [disabled]="paymentForm.get('payee_payment_status')?.value === 'overdue'">
+                        Overdue
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-error *ngIf="paymentForm.get('payee_payment_status')?.hasError('evidenceRequired')">
+                Please upload evidence before setting the status to "Completed".
+            </mat-error>
+
+            @if (mode === 'edit' && !paymentData?.evidence_file_id) {
+            <input type="file" (change)="uploadEvidence($event)" />
+            } @else if (mode === 'view' && paymentData.evidence_file_id && paymentData?.payee_payment_status ===
+            'completed') {
+            <div *ngIf="paymentData?.evidence_file_id">
+                <button color="accent" mat-raised-button (click)="downloadEvidence(paymentData.evidence_file_id)">
+                    Download Evidence
+                </button>
+            </div>
+            }
+
+            <!-- Submit Button -->
+            <button mat-raised-button color="primary" type="submit"
+                [disabled]="paymentForm.invalid || (paymentForm.get('payee_payment_status')?.value === 'completed' && !paymentData.evidence_file_id)">
+                SUBMIT
+            </button>
+        </div>
+    </form>
+</mat-card>

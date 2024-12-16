@@ -1,0 +1,45 @@
+@use 'sass:math';
+
+$base-width: 1920;
+$base-height: 1080;
+$browser-context: 16;
+
+@function get-vw($target) {
+    $vw-context: (
+        $base-width * .01) * 1px;
+    @return math.div($target, $vw-context) * 1vw;
+}
+
+@function get-vh($target) {
+    $vw-context: (
+        $base-height * .01) * 1px;
+    @return math.div($target, $vw-context) * 1vh;
+}
+
+
+@function em($pixels, $context: $browser-context) {
+    @return ($pixels / $context) * 1em;
+}
+
+@function stripUnit($value) {
+    @return $value / ($value * 0 + 1
+);
+}
+
+@function rem($pixel) {
+    @return #{stripUnit($pixel) / stripUnit($browser-context)rem};
+}
+
+@mixin flex($justify: initial, $align-items: initial, $direction: row) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align-items;
+}
+
+@mixin img($width: 100%, $height: 100%, $object-fit: contain, $object-position: center) {
+    width: $width;
+    height: $height;
+    object-fit: $object-fit;
+    object-position: $object-position;
+}

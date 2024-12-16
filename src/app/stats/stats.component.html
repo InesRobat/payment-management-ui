@@ -1,0 +1,12 @@
+<div class="stats">
+    @for (item of stats(); track $index) {
+    <div class="stats__item">
+        <div class="stats__item__text">
+            <p>{{item.name}}</p>
+            <h2>{{item.value}}</h2>
+        </div>
+    </div>
+    }
+</div>
+
+<!-- <app-stats-chart /> -->

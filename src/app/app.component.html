@@ -1,0 +1,6 @@
+<div class="main" [@routeAnimations]="o && o.activatedRouteData 
+&& o.activatedRouteData['animation']">
+  <app-navbar />
+
+  <router-outlet #o="outlet"></router-outlet>
+</div>
