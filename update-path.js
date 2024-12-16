@@ -1,11 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
-// Define the correct output path
-const outputPath = "dist/payment-management-ui/index.html";
-
 // Read the index.html file
-fs.readFile(outputPath, "utf8", function (err, data) {
+fs.readFile("dist/browser/index.html", "utf8", function (err, data) {
   if (err) {
     console.log(err);
     return;
@@ -20,7 +17,7 @@ fs.readFile(outputPath, "utf8", function (err, data) {
   );
 
   // Write the updated content back to the index.html file
-  fs.writeFile(outputPath, result, "utf8", function (err) {
+  fs.writeFile("dist/browser/index.html", result, "utf8", function (err) {
     if (err) console.log(err);
   });
 });
