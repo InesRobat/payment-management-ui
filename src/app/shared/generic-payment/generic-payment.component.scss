@@ -23,6 +23,8 @@ mat-card {
 }
 
 form {
+  margin-top: get-vh(20px);
+
   mat-form-field {
     width: 100%;
     margin-bottom: 20px;
@@ -32,4 +34,50 @@ form {
     display: flex;
     flex-direction: column;
   }
+}
+
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+
+.file-upload-label {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+
+.file-upload-label:hover {
+  background-color: #45a049;
+}
+
+
+.file-upload-input {
+  display: none;
+}
+
+
+.upload-icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+
+.file-upload-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
 }

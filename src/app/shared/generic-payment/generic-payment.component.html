@@ -3,8 +3,16 @@
 </div>
 
 <mat-card>
-    <mat-card-title>{{ mode === 'edit' ? 'Edit Payment' : mode === 'view' ? 'Payment Details' : 'Add Payment'
-        }}</mat-card-title>
+    <mat-card-title>
+        {{ mode === 'edit' ? 'UPDATE PAYMENT' : mode === 'view' ? 'PAYMENT OVERVIEW' : 'NEW PAYMENT' }}
+    </mat-card-title>
+
+    <mat-card-subtitle>
+        {{ mode === 'edit' ? 'Make changes to your existing payment information.' : mode === 'view' ?
+        'Here are the details of your selected payment transaction.' : 'Fill in the details to add a new payment to' +
+        'your account.' }}
+    </mat-card-subtitle>
+
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" [ngClass]="{ 'readonly': mode === 'view' }">
         <div class="form-group">
             <!-- First Name -->
@@ -117,16 +125,27 @@
                 Please upload evidence before setting the status to "Completed".
             </mat-error>
 
-            @if (mode === 'edit' && !paymentData?.evidence_file_id) {
-            <input type="file" (change)="uploadEvidence($event)" />
-            } @else if (mode === 'view' && paymentData.evidence_file_id && paymentData?.payee_payment_status ===
-            'completed') {
-            <div *ngIf="paymentData?.evidence_file_id">
+            <div *ngIf="mode === 'edit' && !paymentData?.evidence_file_id" class="file-upload-container">
+                <label for="file-input" class="file-upload-label">
+                    <span class="upload-icon">📎</span> Choose a file
+                </label>
+                <input type="file" id="file-input" (change)="uploadEvidence($event)" class="file-upload-input"
+                    accept="image/*, .pdf" />
+            </div>
+
+            <!-- Show the filename after selecting a file -->
+            <div *ngIf="fileName" class="file-upload-info">
+                Selected File: {{ fileName }}
+            </div>
+
+            <!-- Show the download button if a file is already present -->
+            <div
+                *ngIf="mode === 'edit' && paymentData.evidence_file_id && paymentData?.payee_payment_status === 'completed'">
                 <button color="accent" mat-raised-button (click)="downloadEvidence(paymentData.evidence_file_id)">
                     Download Evidence
                 </button>
             </div>
-            }
+
 
             <!-- Submit Button -->
             <button mat-raised-button color="primary" type="submit"

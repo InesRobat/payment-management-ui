@@ -23,10 +23,7 @@ export class PaymentDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const paymentId = params['id'];
-      console.log('Payment ID:', paymentId);
-
       const payment = this.getPaymentData(paymentId);
-      console.log('Payment Data:', payment);
       this.paymentData.set(payment);
     });
   }

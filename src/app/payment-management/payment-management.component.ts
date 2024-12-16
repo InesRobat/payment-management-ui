@@ -54,6 +54,7 @@ export class PaymentManagementComponent {
         (response) => {
           this.payments.set(response.items.payments);
           this.totalPayments = response.total;
+          localStorage.setItem('payments', JSON.stringify(response.items.payments));
         },
         (error) => {
           console.error('Error fetching payments', error);

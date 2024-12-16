@@ -59,6 +59,7 @@ export class GenericPaymentComponent implements OnInit {
   filteredCities: any[] = [];
   currentCountry?: string;
   positions: any[] = [];
+  fileName: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -88,6 +89,7 @@ export class GenericPaymentComponent implements OnInit {
     });
 
     if (this.paymentData) {
+      console.log(this.paymentData, 'DATA')
       this.loadCountryPositions();
     }
   }
@@ -213,26 +215,21 @@ export class GenericPaymentComponent implements OnInit {
       statusControl?.setErrors({ 'evidenceRequired': true });   // Set the custom error
       statusControl?.markAsDirty();   // Mark the control as dirty
       statusControl?.markAsTouched(); // Mark the control as touched
-      console.log('Error set on payee_payment_status:', statusControl?.errors);
       this.cdr.detectChanges();
     }
   }
 
   uploadEvidence(event: any): void {
-    const file = event.target.files[0]; // Get the file
+    const file = event.target.files[0];
 
     if (file) {
-      const formData = new FormData();
-      formData.append('evidence', file);
+      this.fileName = file.name;
 
       this.paymentService.uploadEvidence(this.route.snapshot.params['id'], file).subscribe({
         next: (response: any) => {
           const evidenceFileId = response.file_id;
-          console.log(response, evidenceFileId);
           this.paymentData.evidence_file_id = evidenceFileId;
           this.paymentForm.get('payee_payment_status')?.setValue('completed');
-          console.log('Evidence uploaded successfully');
-          console.log(this.paymentData, 'DATA');
         },
         error: (err) => {
           console.error('Error uploading evidence', err);
